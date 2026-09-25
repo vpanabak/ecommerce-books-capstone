@@ -1,0 +1,13 @@
+ecommerce-books-capstone/
+├── README.md
+├── requirements.txt
+└── analytics/
+    ├── README.md
+    ├── titanic.csv             (Committed raw offline fallback)
+    ├── titanic_cleaned.csv     (Committed cleaned dataset)
+    ├── 01_eda.py
+    ├── 02_modeling.py
+    ├── eda_charts.png
+    ├── decision_tree.png
+    ├── fare_residuals.png
+    └── full_titanic_pipeline.pkl
