@@ -1,8 +1,32 @@
-# E-Commerce Data Pipeline, Analytics & Support Assistant Capstone
+# Module 3: Support Assistant RAG Service (`/support_assistant`)
 
-This repository contains the complete three-module capstone project.
+This module implements a complete, local, zero-cost Retrieval-Augmented Generation (RAG) service for Zepto's policy management. It incorporates document embedding, ChromaDB vector indexing, a LangGraph state graph with conditional intent routing, Pydantic JSON schema validation, and a FastAPI endpoint wrapped in a Docker container.
 
-## Repository Structure
-- `data_pipeline/`: Web scraping, cleaning, fixed-rate currency conversion (1 GBP = 105.50 INR), SQLite database storage, and Pandas verification.
-- `analytics/`: Exploratory Data Analysis (EDA), threshold-based cleaning, machine learning models (Logistic Regression, Decision Tree, Random Forest), hyperparameter tuning, regression analysis, and pipeline saving.
-- `support_assistant/`: Local RAG support chatbot built with LangGraph, ChromaDB, Hugging Face Embeddings, FastAPI, and Docker.
+---
+
+## 1. RAG Pipeline Architecture
+
+```text
+[User Query]
+     │
+     ▼
+┌─────────────────────────┐
+│  classify_intent_node   │ ──(Keyword Heuristic)
+└─────────────────────────┘
+     │
+     ├──► policy_question ──► ┌──────────────────────────┐
+     │                        │ retrieve_and_answer_node │
+     │                        └──────────────────────────┘
+     │                                     │
+     │                         (ChromaDB Cosine Search)
+     │                                     │
+     │                        ┌──────────────────────────┐
+     │                        │  MOCK_LLM / Real LLM     │
+     │                        └──────────────────────────┘
+     │                                     │
+     └──► general_question──► ┌──────────────────────────┐
+                              │    direct_answer_node    │
+                              └──────────────────────────┘
+                                           │
+                                           ▼
+                                [Pydantic JSON Response]
