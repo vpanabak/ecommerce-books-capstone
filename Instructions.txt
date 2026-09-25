@@ -1,0 +1,5 @@
+Navigate to the data_pipeline directory:
+cd data_pipeline
+Execute the pipeline script:
+python pipeline.py
+The script will scrape live data, regenerate books_capstone.db, execute all required SQL queries, and display side-by-side SQL vs. Pandas pd.merge() verification output.
