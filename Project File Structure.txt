@@ -1,0 +1,7 @@
+ecommerce-books-capstone/
+├── README.md
+├── requirements.txt
+└── data_pipeline/
+    ├── README.md
+    ├── pipeline.py
+    └── books_capstone.db  (generated automatically when running pipeline.py)
