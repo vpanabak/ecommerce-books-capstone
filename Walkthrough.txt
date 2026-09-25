@@ -1,0 +1,10 @@
+Pipeline Flow Walkthrough
+Ingestion & Indexing: At startup, initialize_vector_store() reads all 8 text files in /docs, generates local vector embeddings using sentence-transformers/all-MiniLM-L6-v2, and persists them in a local ChromaDB collection (zepto_policies).
+
+Intent Classification (classify_intent): Evaluates the incoming query string. Under MOCK_LLM=1 (default baseline), it executes a keyword check (delivery, return, refund, membership, tracking, cancel, gift card, support hours). If matched, it sets intent = "policy_question"; otherwise intent = "general_question".
+
+Conditional Routing: A LangGraph conditional edge routes policy_question to retrieve_and_answer and general_question to direct_answer.
+
+Retrieval & Response Generation (retrieve_and_answer): Performs cosine similarity search over ChromaDB to retrieve top-3 matching chunks (doc_01...doc_08). In MOCK_LLM=1 mode, it deterministically formats a grounded snippet response without external API calls.
+
+Direct Answer (direct_answer): Returns a fixed canned response for non-policy queries.
