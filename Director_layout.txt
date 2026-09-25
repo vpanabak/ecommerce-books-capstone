@@ -1,0 +1,18 @@
+ecommerce-books-capstone/
+├── README.md
+├── requirements.txt
+└── support_assistant/
+    ├── README.md
+    ├── Dockerfile
+    ├── main.py
+    ├── requirements.txt
+    ├── docs/
+    │   ├── doc_01.txt
+    │   ├── doc_02.txt
+    │   ├── doc_03.txt
+    │   ├── doc_04.txt
+    │   ├── doc_05.txt
+    │   ├── doc_06.txt
+    │   ├── doc_07.txt
+    │   └── doc_08.txt
+    └── chroma_db/  (Generated automatically upon running)
