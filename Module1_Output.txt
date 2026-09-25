@@ -1,0 +1,118 @@
+=== ZEPTO DATA PIPELINE: CATALOG BENCHMARKING ===
+
+[Step 1] Scraping books from books.toscrape.com...
+Scraped 51 total books across 3 categories.
+
+[Step 2] Cleaning & enriching fields...
+Data cleaning & currency enrichment completed successfully.
+                                               title  price_gbp  price_inr  \
+0                            It's Only the Himalayas      45.17    4765.44   
+1  Full Moon over Noahâs Ark: An Odyssey to Mou...      49.43    5214.86   
+2  See America: A Celebration of Our National Par...      48.87    5155.78   
+3  Vagabonding: An Uncommon Guide to the Art of L...      36.94    3897.17   
+4                               Under the Tuscan Sun      37.33    3938.31   
+
+   rating  in_stock category_name  
+0       2         1        Travel  
+1       4         1        Travel  
+2       3         1        Travel  
+3       2         1        Travel  
+4       3         1        Travel  
+
+[Step 3] Creating normalized SQLite schema & loading data...
+Tables 'categories' and 'books' populated successfully.
+
+[Step 4] Executing required SQL queries...
+
+--- Query 1 (SELECT/WHERE & JOIN) ---
+                                        title  price_gbp  price_inr  rating  \
+0        Tastes Like Fear (DI Marnie Rome #3)      10.69    1127.79       1   
+1                  Hide Away (Eve Duncan #20)      11.84    1249.12       1   
+2                           Playing with Fire      13.71    1446.41       3   
+3      That Darkness (Gardiner and Renner #1)      13.92    1468.56       1   
+4  The Constant Princess (The Tudor Court #1)      16.62    1753.41       3   
+
+        category_name  
+0             Mystery  
+1             Mystery  
+2             Mystery  
+3             Mystery  
+4  Historical Fiction  
+
+--- Query 2 (DISTINCT & JOIN) ---
+        category_name
+0              Travel
+1             Mystery
+2  Historical Fiction
+
+--- Query 3 (ORDER BY & LIMIT) ---
+                              title  price_gbp  price_inr
+0     Boar Island (Anna Pigeon #19)      59.48    6275.14
+1  A Year in Provence (Provence #1)      56.88    6000.84
+2               The Past Never Ends      56.50    5960.75
+
+--- Query 4 (BETWEEN filter) ---
+                                               title  price_gbp  rating
+0                 1,000 Places to See Before You Die      26.08       5
+1  What Happened on Beale Street (Secrets of the ...      25.37       5
+2                                       Mrs. Houdini      30.25       5
+3                              The Passion of Dolssa      28.32       5
+4                             Voyager (Outlander #3)      21.07       5
+
+--- Query 5 (IN operator & ORDER BY) ---
+                                                title  rating  price_inr
+0                  1,000 Places to See Before You Die       5    2751.44
+1              A Time of Torment (Charlie Parker #14)       5    5100.92
+2   What Happened on Beale Street (Secrets of the ...       5    2676.54
+3   The Bachelor Girl's Guide to Murder (Herringfo...       5    5517.65
+4             A Flight of Arrows (The Pathfinders #2)       5    5858.42
+5                                        Mrs. Houdini       5    3191.38
+6                               The Passion of Dolssa       5    2987.76
+7                              Voyager (Outlander #3)       5    2222.89
+8                                        The Red Tent       5    3762.13
+9   Full Moon over Noahâs Ark: An Odyssey to Mou...       4    5214.86
+10                   A Year in Provence (Provence #1)       4    6000.84
+11                                      Sharp Objects       4    5045.01
+12                                The Past Never Ends       4    5960.75
+13    The Murder of Roger Ackroyd (Hercule Poirot #4)       4    4652.55
+14  Murder at the 42nd Street Library (Raymond Amb...       4    5734.98
+15   Delivering the Truth (Quaker Midwife Mystery #1)       4    2203.90
+16                          The Marriage of Opposites       4    2962.44
+17                                  A Paris Apartment       4    4115.55
+18    World Without End (The Pillars of the Earth #2)       4    3478.34
+
+[Step 5] Verifying JOIN Query equivalence in Pandas...
+
+SQL JOIN Result:
+                                        title  price_gbp  price_inr  rating  \
+0        Tastes Like Fear (DI Marnie Rome #3)      10.69    1127.79       1   
+1                  Hide Away (Eve Duncan #20)      11.84    1249.12       1   
+2                           Playing with Fire      13.71    1446.41       3   
+3      That Darkness (Gardiner and Renner #1)      13.92    1468.56       1   
+4  The Constant Princess (The Tudor Court #1)      16.62    1753.41       3   
+
+        category_name  
+0             Mystery  
+1             Mystery  
+2             Mystery  
+3             Mystery  
+4  Historical Fiction  
+
+Pandas pd.merge() Equivalent Result:
+                                        title  price_gbp  price_inr  rating  \
+0        Tastes Like Fear (DI Marnie Rome #3)      10.69    1127.79       1   
+1                  Hide Away (Eve Duncan #20)      11.84    1249.12       1   
+2                           Playing with Fire      13.71    1446.41       3   
+3      That Darkness (Gardiner and Renner #1)      13.92    1468.56       1   
+4  The Constant Princess (The Tudor Court #1)      16.62    1753.41       3   
+
+        category_name  
+0             Mystery  
+1             Mystery  
+2             Mystery  
+3             Mystery  
+4  Historical Fiction  
+
+✅ EQUIVALENCE VERIFIED: Both SQL JOIN and Pandas pd.merge() produced identical outputs!
+
+=== PIPELINE EXECUTION COMPLETE ===
